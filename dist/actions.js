@@ -1,14 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 /*  Action Types    */
-export const MOVE_PIECE = 'MOVE_PIECE';
-export const SELECT_PIECE = 'SELECT_PIECE';
-export const DESELECT_PIECE = 'DESELECT_PIECE';
-export const NEXT_TURN = 'NEXT_TURN';
-
+exports.MOVE_PIECE = 'MOVE_PIECE';
+exports.SELECT_PIECE = 'SELECT_PIECE';
+exports.DESELECT_PIECE = 'DESELECT_PIECE';
+exports.NEXT_TURN = 'NEXT_TURN';
 /*  Constants   */
-function isPawnMove(grid: Array<Array<any>>, start: any, end: any) {
+function isPawnMove(grid, start, end) {
     const piece = grid[start.row][start.col];
     const direction = piece.color === 'WHITE' ? -1 : 1;
-    
     ///     Empty Space Move    ///
     if ((start.col === end.col) && (grid[end.row][end.col] === null)) {
         // Double Move
@@ -25,7 +25,6 @@ function isPawnMove(grid: Array<Array<any>>, start: any, end: any) {
             return true;
         }
     }
-    
     ///     Attack Move     ///
     if ((Math.abs(start.col - end.col) === 1) && ((end.row - start.row) === direction)) {
         // Enemy exists
@@ -35,10 +34,8 @@ function isPawnMove(grid: Array<Array<any>>, start: any, end: any) {
     }
     return false;
 }
-
-function isRookMove(grid: Array<Array<any>>, start: any, end: any) {
+function isRookMove(grid, start, end) {
     const piece = grid[start.row][start.col];
-
     // Valid end location
     if ((grid[end.row][end.col] === null) || (grid[end.row][end.col].color !== piece.color)) {
         // Correct Direction
@@ -61,13 +58,10 @@ function isRookMove(grid: Array<Array<any>>, start: any, end: any) {
             return true;
         }
     }
-
     return false;
 }
-
-function isKnightMove(grid: Array<Array<any>>, start: any, end: any) {
+function isKnightMove(grid, start, end) {
     const piece = grid[start.row][start.col];
-
     // Valid end location
     if ((grid[end.row][end.col] === null) || (grid[end.row][end.col].color !== piece.color)) {
         // Check valid move 
@@ -80,10 +74,8 @@ function isKnightMove(grid: Array<Array<any>>, start: any, end: any) {
     }
     return false;
 }
-
-function isBishopMove(grid: Array<Array<any>>, start: any, end: any) {
+function isBishopMove(grid, start, end) {
     const piece = grid[start.row][start.col];
-
     // Valid end location
     if ((grid[end.row][end.col] === null) || (grid[end.row][end.col].color !== piece.color)) {
         // Valid Move
@@ -91,7 +83,6 @@ function isBishopMove(grid: Array<Array<any>>, start: any, end: any) {
             // Can't jump over
             const rowDir = start.row > end.row ? -1 : 1;
             const colDir = start.col > end.col ? -1 : 1;
-
             for (let i = 1; i < Math.abs(start.row - end.row); i++) {
                 if (grid[start.row + (i * rowDir)][start.col + (i * colDir)])
                     return false;
@@ -100,14 +91,11 @@ function isBishopMove(grid: Array<Array<any>>, start: any, end: any) {
         }
     }
 }
-
-function isQueenMove(grid: Array<Array<any>>, start: any, end: any) {
+function isQueenMove(grid, start, end) {
     return isRookMove(grid, start, end) || isBishopMove(grid, start, end);
 }
-
-function isKingMove(grid: Array<Array<any>>, start: any, end: any) {
+function isKingMove(grid, start, end) {
     const piece = grid[start.row][start.col];
-
     // Valid end location
     if ((grid[end.row][end.col] === null) || (grid[end.row][end.col].color !== piece.color)) {
         // Valid Move
@@ -118,14 +106,13 @@ function isKingMove(grid: Array<Array<any>>, start: any, end: any) {
     }
     return false;
 }
-
 ////    Game Check Moves    ////
-export function isChecked(grid: Array<Array<any>>, king: any, loc: any) {
+function isChecked(grid, king, loc) {
     let check = false;
     grid.forEach((row, rInd) => {
         row.forEach((cell, cInd) => {
             if ((cell) && (cell.color !== king.color)) {
-                if (PieceEnum[cell.name].moves(grid, { row: rInd, col: cInd }, loc)) {
+                if (exports.PieceEnum[cell.name].moves(grid, { row: rInd, col: cInd }, loc)) {
                     check = true;
                 }
             }
@@ -133,15 +120,13 @@ export function isChecked(grid: Array<Array<any>>, king: any, loc: any) {
     });
     return check;
 }
-
-export function isCheckedIf(grid: Array<Array<any>>, kingLoc: any, start: any, end: any) {
-
+exports.isChecked = isChecked;
+function isCheckedIf(grid, kingLoc, start, end) {
     const newGrid = grid.slice().map(row => {
         return row.slice();
     });
     newGrid[end.row][end.col] = newGrid[start.row][start.col];
     newGrid[start.row][start.col] = null;
-
     // Special case: king moves
     if (newGrid[end.row][end.col].name === 'K') {
         kingLoc = end;
@@ -149,69 +134,55 @@ export function isCheckedIf(grid: Array<Array<any>>, kingLoc: any, start: any, e
     const king = newGrid[kingLoc.row][kingLoc.col];
     return isChecked(newGrid, king, kingLoc);
 }
-
-export function isMate(grid: Array<Array<any>>, loc: any) {
-    const possibleMoves: Array<any> = [];
+exports.isCheckedIf = isCheckedIf;
+function isMate(grid, loc) {
+    const possibleMoves = [];
     const king = grid[loc.row][loc.col];
-
     // All available pieces to player
-    grid.forEach((row: any, rInd: number) => {
-        row.forEach((cell: any, cInd: number) => {
+    grid.forEach((row, rInd) => {
+        row.forEach((cell, cInd) => {
             if ((cell) && (cell.color === king.color)) {
-
                 // Every possible move that can be made
                 grid.forEach((newRow, rInd2) => {
-                    newRow.forEach ((move, cInd2) => {
-
+                    newRow.forEach((move, cInd2) => {
                         const start = { row: rInd, col: cInd };
                         const end = { row: rInd2, col: cInd2 };
-
-                        if (PieceEnum[cell.name].moves(grid, start, end )) {
+                        if (exports.PieceEnum[cell.name].moves(grid, start, end)) {
                             if (!isCheckedIf(grid, loc, start, end)) {
-                                possibleMoves.push (cell);
+                                possibleMoves.push(cell);
                             }
                         }
                     });
                 });
-
-
             }
         });
     });
-
     return !(possibleMoves.length > 0);
 }
-
-export const PieceEnum: {
-    'P': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'R': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'H': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'B': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'Q': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'K': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    [key: string]: any,
-} = Object.freeze({
-    'P': {name: 'PAWN', moves: isPawnMove, image: null},
-    'R': {name: 'ROOK', moves: isRookMove, image: null},
-    'H': {name: 'KNIGHT', moves: isKnightMove, image: null},
-    'B': {name: 'BISHOP', moves: isBishopMove, image: null},
-    'Q': {name: 'QUEEN', moves: isQueenMove, image: null},
-    'K': {name: 'KING', moves: isKingMove, image: null}
-})
-
+exports.isMate = isMate;
+exports.PieceEnum = Object.freeze({
+    'P': { name: 'PAWN', moves: isPawnMove, image: null },
+    'R': { name: 'ROOK', moves: isRookMove, image: null },
+    'H': { name: 'KNIGHT', moves: isKnightMove, image: null },
+    'B': { name: 'BISHOP', moves: isBishopMove, image: null },
+    'Q': { name: 'QUEEN', moves: isQueenMove, image: null },
+    'K': { name: 'KING', moves: isKingMove, image: null }
+});
 /*  Action Creators */
-export function movePiece(start: any, end: any) {
-    return { type: MOVE_PIECE, start, end };
+function movePiece(start, end) {
+    return { type: exports.MOVE_PIECE, start, end };
 }
-
-export function selectPiece(location: any) {
-    return { type: SELECT_PIECE, location };
+exports.movePiece = movePiece;
+function selectPiece(location) {
+    return { type: exports.SELECT_PIECE, location };
 }
-
-export function deselectPiece() {
-    return { type: DESELECT_PIECE };
+exports.selectPiece = selectPiece;
+function deselectPiece() {
+    return { type: exports.DESELECT_PIECE };
 }
-
-export function nextTurn() {
-    return { type: NEXT_TURN };
+exports.deselectPiece = deselectPiece;
+function nextTurn() {
+    return { type: exports.NEXT_TURN };
 }
+exports.nextTurn = nextTurn;
+//# sourceMappingURL=actions.js.map

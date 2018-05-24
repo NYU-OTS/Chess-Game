@@ -19,6 +19,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "@types/prop-types": "^15.5.3",
+    "@types/react-redux": "^6.0.0",
     "awesome-typescript-loader": "^5.0.0",
     "source-map-loader": "^0.2.3",
     "typescript": "^2.8.3",

@@ -1,20 +1,19 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import chessApp from './reducers.js';
-import Game from './components/Game';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = require("react");
+const ReactDOM = require("react-dom");
+const react_redux_1 = require("react-redux");
+const redux_1 = require("redux");
+const reducers_js_1 = require("./reducers.js");
+const Game_1 = require("./components/Game");
 //import { PieceEnum } from './actions.js';
-import './index.css';
-
-
-
+require("./index.css");
 /*const initialState: {
     grid: Array<Array<any>>,
     turn: string,
     selected: any
 } = { */
-const initialState: any = {
+const initialState = {
     grid: [
         ['R', 'H', 'B', 'K', 'Q', 'B', 'H', 'R'],
         ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
@@ -28,24 +27,19 @@ const initialState: any = {
     turn: 'WHITE',
     selected: null
 };
-
 initialState.grid = initGame(initialState.grid);
-const store = createStore(chessApp, initialState);
-
-ReactDOM.render(
-    <Provider store={store}>
-        <Game />
-    </Provider>,
-    document.getElementById('root')
-);
-
-function initGame(grid: Array<Array<any>>) {
-    return grid.map((row: any, index: number) => {
-        return row.map((ele: any) => {
+const store = redux_1.createStore(reducers_js_1.default, initialState);
+ReactDOM.render(<react_redux_1.Provider store={store}>
+        <Game_1.default />
+    </react_redux_1.Provider>, document.getElementById('root'));
+function initGame(grid) {
+    return grid.map((row, index) => {
+        return row.map((ele) => {
             if (ele !== ' ')
                 return { 'name': ele, 'color': (index < 2 ? 'BLACK' : (index > 5 ? 'WHITE' : null)) };
-            else 
+            else
                 return null;
         });
     });
 }
+//# sourceMappingURL=index.js.map
