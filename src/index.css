@@ -40,6 +40,10 @@ body {
       background-color: sandybrown;
   }
   
+  .red {
+      background-color: red;
+  }
+
   .square:focus {
     outline: none;
   }

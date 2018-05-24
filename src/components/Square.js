@@ -1,40 +1,51 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
-class Square extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { selected: this.props.selected };
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+exports.__esModule = true;
+var React = require("react");
+var Square = /** @class */ (function (_super) {
+    __extends(Square, _super);
+    function Square(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = { selected: _this.props.selected };
+        return _this;
     }
-
-    pieceColor() {
-        //return this.props.selected ? 'RED' : this.props.pieceColor;
+    Square.prototype.pieceColor = function () {
         if (this.props.selected)
-            return 'RED';
+            return 'BLUE';
         else if (this.props.piece)
             return this.props.piece.color;
-        else 
-            return 'BLACK'
-    }
-
-    render() {
-        const classes = "square " + this.props.square;
-        
-        return (
-            <button className={classes} 
-                style={{color: this.pieceColor()}}
-                onClick={this.props.onClick}>
+        else
+            return 'BLACK';
+    };
+    Square.prototype.squareColor = function () {
+        if ((this.props.piece) && (this.props.piece.checked))
+            return 'red';
+        else
+            return this.props.square;
+    };
+    Square.prototype.render = function () {
+        var classes = "square " + this.squareColor();
+        return (<button className={classes} style={{ color: this.pieceColor() }} onClick={this.props.onClick}>
                 {this.props.piece ? this.props.piece.name : ' '}
-            </button>
-        )
-    }
-}
-
+            </button>);
+    };
+    return Square;
+}(React.Component));
+/*
 Square.propTypes = {
     square: PropTypes.string.isRequired,
     piece: PropTypes.object,
     selected: PropTypes.bool,
     onClick: PropTypes.func.isRequired
 };
-
-export default Square;
+*/
+exports["default"] = Square;
