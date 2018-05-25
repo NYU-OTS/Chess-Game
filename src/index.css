@@ -24,12 +24,12 @@ body {
     font-size: 24px;
     font-weight: bold;
     line-height: 34px;
-    height: 34px;
+    height: 60px;
     margin-right: -1px;
     margin-top: -1px;
     padding: 0;
     text-align: center;
-    width: 34px;
+    width: 60px;
   }
 
   .brown {
@@ -42,6 +42,10 @@ body {
   
   .red {
       background-color: red;
+  }
+  
+  .blue {
+    background-color: lightblue;
   }
 
   .square:focus {

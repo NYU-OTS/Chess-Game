@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
+import { PieceEnum } from '../actions';
 
 class Square extends React.Component<SquareProps, {}> {
     constructor(props: any) {
@@ -17,7 +18,9 @@ class Square extends React.Component<SquareProps, {}> {
     }
 
     squareColor() {
-        if ((this.props.piece) && (this.props.piece.checked))
+        if (this.props.selected)
+            return 'blue'
+        else if ((this.props.piece) && (this.props.piece.checked))
             return 'red'
         else 
             return this.props.square;
@@ -25,12 +28,12 @@ class Square extends React.Component<SquareProps, {}> {
 
     render() {
         const classes = "square " + this.squareColor();
-        
+        const image = this.props.piece ? PieceEnum[this.props.piece.name][this.props.piece.color] : '/img/EMPTY.png';
         return (
             <button className={classes} 
                 style={{color: this.pieceColor()}}
                 onClick={this.props.onClick}>
-                {this.props.piece ? this.props.piece.name : ' '}
+                <img src={image} />
             </button>
         )
     }
@@ -39,20 +42,11 @@ class Square extends React.Component<SquareProps, {}> {
 interface SquareProps {
     // Variables
     square : string,
-    piece : any,
+    piece : {name: string, color: string, checked: boolean},            //{ 'name': ele, 'color': (index < 2 ? 'BLACK' : (index > 5 ? 'WHITE' : null)) };
     selected : boolean,
     
     // Functions
     onClick : (loc: any) => void,
 }
-
-/*
-Square.propTypes = {
-    square: PropTypes.string.isRequired,
-    piece: PropTypes.object,
-    selected: PropTypes.bool,
-    onClick: PropTypes.func.isRequired
-};
-*/
 
 export default Square;

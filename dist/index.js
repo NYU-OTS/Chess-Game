@@ -6,13 +6,7 @@ const react_redux_1 = require("react-redux");
 const redux_1 = require("redux");
 const reducers_js_1 = require("./reducers.js");
 const Game_1 = require("./components/Game");
-//import { PieceEnum } from './actions.js';
 require("./index.css");
-/*const initialState: {
-    grid: Array<Array<any>>,
-    turn: string,
-    selected: any
-} = { */
 const initialState = {
     grid: [
         ['R', 'H', 'B', 'K', 'Q', 'B', 'H', 'R'],

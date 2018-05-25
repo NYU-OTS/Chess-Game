@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = require("react");
+const actions_1 = require("../actions");
 class Square extends React.Component {
     constructor(props) {
         super(props);
@@ -15,25 +16,20 @@ class Square extends React.Component {
             return 'BLACK';
     }
     squareColor() {
-        if ((this.props.piece) && (this.props.piece.checked))
+        if (this.props.selected)
+            return 'blue';
+        else if ((this.props.piece) && (this.props.piece.checked))
             return 'red';
         else
             return this.props.square;
     }
     render() {
         const classes = "square " + this.squareColor();
+        const image = this.props.piece ? actions_1.PieceEnum[this.props.piece.name][this.props.piece.color] : '/img/EMPTY.png';
         return (<button className={classes} style={{ color: this.pieceColor() }} onClick={this.props.onClick}>
-                {this.props.piece ? this.props.piece.name : ' '}
+                <img src={image}/>
             </button>);
     }
 }
-/*
-Square.propTypes = {
-    square: PropTypes.string.isRequired,
-    piece: PropTypes.object,
-    selected: PropTypes.bool,
-    onClick: PropTypes.func.isRequired
-};
-*/
 exports.default = Square;
 //# sourceMappingURL=Square.js.map

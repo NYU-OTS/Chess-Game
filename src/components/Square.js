@@ -11,6 +11,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 var React = require("react");
+var actions_1 = require("../actions");
 var Square = /** @class */ (function (_super) {
     __extends(Square, _super);
     function Square(props) {
@@ -27,25 +28,20 @@ var Square = /** @class */ (function (_super) {
             return 'BLACK';
     };
     Square.prototype.squareColor = function () {
-        if ((this.props.piece) && (this.props.piece.checked))
+        if (this.props.selected)
+            return 'blue';
+        else if ((this.props.piece) && (this.props.piece.checked))
             return 'red';
         else
             return this.props.square;
     };
     Square.prototype.render = function () {
         var classes = "square " + this.squareColor();
+        var image = this.props.piece ? actions_1.PieceEnum[this.props.piece.name][this.props.piece.color] : '/img/EMPTY.png';
         return (<button className={classes} style={{ color: this.pieceColor() }} onClick={this.props.onClick}>
-                {this.props.piece ? this.props.piece.name : ' '}
+                <img src={image}/>
             </button>);
     };
     return Square;
 }(React.Component));
-/*
-Square.propTypes = {
-    square: PropTypes.string.isRequired,
-    piece: PropTypes.object,
-    selected: PropTypes.bool,
-    onClick: PropTypes.func.isRequired
-};
-*/
 exports["default"] = Square;

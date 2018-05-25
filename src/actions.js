@@ -106,6 +106,7 @@ function isKingMove(grid, start, end) {
     }
     return false;
 }
+////    Game Check Moves    ////
 function isChecked(grid, king, loc) {
     var check = false;
     grid.forEach(function (row, rInd) {
@@ -119,6 +120,7 @@ function isChecked(grid, king, loc) {
     });
     return check;
 }
+exports.isChecked = isChecked;
 function isCheckedIf(grid, kingLoc, start, end) {
     var newGrid = grid.slice().map(function (row) {
         return row.slice();
@@ -132,6 +134,7 @@ function isCheckedIf(grid, kingLoc, start, end) {
     var king = newGrid[kingLoc.row][kingLoc.col];
     return isChecked(newGrid, king, kingLoc);
 }
+exports.isCheckedIf = isCheckedIf;
 function isMate(grid, loc) {
     var possibleMoves = [];
     var king = grid[loc.row][loc.col];
@@ -144,7 +147,6 @@ function isMate(grid, loc) {
                     newRow.forEach(function (move, cInd2) {
                         var start = { row: rInd, col: cInd };
                         var end = { row: rInd2, col: cInd2 };
-                        //const kingLoc = cell.name === 'K' ? end : loc;
                         if (exports.PieceEnum[cell.name].moves(grid, start, end)) {
                             if (!isCheckedIf(grid, loc, start, end)) {
                                 possibleMoves.push(cell);
@@ -157,13 +159,24 @@ function isMate(grid, loc) {
     });
     return !(possibleMoves.length > 0);
 }
+exports.isMate = isMate;
+/*
+export const PieceEnum: {
+    'P': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, black: string, white: string},
+    'R': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
+    'H': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
+    'B': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
+    'Q': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
+    'K': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
+    [key: string]: any,
+} = */
 exports.PieceEnum = Object.freeze({
-    'P': { name: 'PAWN', moves: isPawnMove, image: null },
-    'R': { name: 'ROOK', moves: isRookMove, image: null },
-    'H': { name: 'KNIGHT', moves: isKnightMove, image: null },
-    'B': { name: 'BISHOP', moves: isBishopMove, image: null },
-    'Q': { name: 'QUEEN', moves: isQueenMove, image: null },
-    'K': { name: 'KING', moves: isKingMove, isChecked: isChecked, isMate: isMate, isCheckedIf: isCheckedIf, image: null }
+    'P': { name: 'PAWN', moves: isPawnMove, BLACK: '/img/PAWN_BLACK.png', WHITE: '/img/PAWN_WHITE.png' },
+    'R': { name: 'ROOK', moves: isRookMove, BLACK: '/img/ROOK_BLACK.png', WHITE: '/img/ROOK_WHITE.png' },
+    'H': { name: 'KNIGHT', moves: isKnightMove, BLACK: '/img/KNIGHT_BLACK.png', WHITE: '/img/KNIGHT_WHITE.png' },
+    'B': { name: 'BISHOP', moves: isBishopMove, BLACK: '/img/BISHOP_BLACK.png', WHITE: '/img/BISHOP_WHITE.png' },
+    'Q': { name: 'QUEEN', moves: isQueenMove, BLACK: '/img/QUEEN_BLACK.png', WHITE: '/img/QUEEN_WHITE.png' },
+    'K': { name: 'KING', moves: isKingMove, BLACK: '/img/KING_BLACK.png', WHITE: '/img/KING_WHITE.png' }
 });
 /*  Action Creators */
 function movePiece(start, end) {

@@ -68,19 +68,20 @@ var Board = /** @class */ (function (_super) {
                 });
                 // Make Move if King isn't in check
                 var pKing = kings_1[this.props.playerTurn];
-                if (!actions_js_1.PieceEnum['K'].isCheckedIf(this.props.grid, pKing, start, end)) {
+                if (!actions_js_1.isCheckedIf(this.props.grid, pKing, start, end)) {
                     this.props.grid[pKing.row][pKing.col].checked = null;
                     this.props.movePiece(start, end);
                     // Must consider check/mate after each move
                     var oKing = kings_1[this.props.playerTurn === 'WHITE' ? 'BLACK' : 'WHITE'];
-                    if (actions_js_1.PieceEnum['K'].isChecked(this.props.grid, this.props.grid[oKing.row][oKing.col], oKing)) {
+                    if (actions_js_1.isChecked(this.props.grid, this.props.grid[oKing.row][oKing.col], oKing)) {
                         // Check
                         console.log("Check");
                         this.props.grid[oKing.row][oKing.col].checked = true;
-                        if (actions_js_1.PieceEnum['K'].isMate(this.props.grid, oKing)) {
+                        if (actions_js_1.isMate(this.props.grid, oKing)) {
                             // Game Over
                             console.log("Mate");
-                            alert('GAME OVER!!!');
+                            var message = "GAME OVER!!! Player " + this.props.grid[pKing.row][pKing.col].color + " Wins!";
+                            alert(message);
                         }
                     }
                     this.props.nextTurn();

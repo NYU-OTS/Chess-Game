@@ -182,21 +182,25 @@ export function isMate(grid: Array<Array<any>>, loc: any) {
     return !(possibleMoves.length > 0);
 }
 
+/*
 export const PieceEnum: {
-    'P': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
+    'P': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, black: string, white: string},
     'R': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
     'H': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
     'B': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
     'Q': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
     'K': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
     [key: string]: any,
+} = */
+export const PieceEnum: {
+    [key: string]: {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, BLACK: string, WHITE: string, [key: string]: any}
 } = Object.freeze({
-    'P': {name: 'PAWN', moves: isPawnMove, image: null},
-    'R': {name: 'ROOK', moves: isRookMove, image: null},
-    'H': {name: 'KNIGHT', moves: isKnightMove, image: null},
-    'B': {name: 'BISHOP', moves: isBishopMove, image: null},
-    'Q': {name: 'QUEEN', moves: isQueenMove, image: null},
-    'K': {name: 'KING', moves: isKingMove, image: null}
+    'P': {name: 'PAWN', moves: isPawnMove, BLACK: '/img/PAWN_BLACK.png', WHITE: '/img/PAWN_WHITE.png'},
+    'R': {name: 'ROOK', moves: isRookMove, BLACK: '/img/ROOK_BLACK.png', WHITE: '/img/ROOK_WHITE.png'},
+    'H': {name: 'KNIGHT', moves: isKnightMove, BLACK: '/img/KNIGHT_BLACK.png', WHITE: '/img/KNIGHT_WHITE.png'},
+    'B': {name: 'BISHOP', moves: isBishopMove, BLACK: '/img/BISHOP_BLACK.png', WHITE: '/img/BISHOP_WHITE.png'},
+    'Q': {name: 'QUEEN', moves: isQueenMove, BLACK: '/img/QUEEN_BLACK.png', WHITE: '/img/QUEEN_WHITE.png'},
+    'K': {name: 'KING', moves: isKingMove, BLACK: '/img/KING_BLACK.png', WHITE: '/img/KING_WHITE.png'}
 })
 
 /*  Action Creators */

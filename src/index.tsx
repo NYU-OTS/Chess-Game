@@ -4,16 +4,8 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import chessApp from './reducers.js';
 import Game from './components/Game';
-//import { PieceEnum } from './actions.js';
 import './index.css';
 
-
-
-/*const initialState: {
-    grid: Array<Array<any>>,
-    turn: string,
-    selected: any
-} = { */
 const initialState: any = {
     grid: [
         ['R', 'H', 'B', 'K', 'Q', 'B', 'H', 'R'],

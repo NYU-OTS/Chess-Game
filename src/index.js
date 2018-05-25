@@ -6,7 +6,6 @@ var react_redux_1 = require("react-redux");
 var redux_1 = require("redux");
 var reducers_js_1 = require("./reducers.js");
 var Game_1 = require("./components/Game");
-//import { PieceEnum } from './actions.js';
 require("./index.css");
 var initialState = {
     grid: [
