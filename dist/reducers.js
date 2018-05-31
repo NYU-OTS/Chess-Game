@@ -5,8 +5,15 @@ const actions_js_1 = require("./actions.js");
 function chessApp(state, action) {
     switch (action.type) {
         case actions_js_1.MOVE_PIECE:
-            console.log("Moving Piece");
+            console.log("Moved Piece");
+            // Deep copy
             const newState = Object.assign({}, state);
+            newState.grid = state.grid.map((row) => {
+                return row.map((cell) => {
+                    return Object.assign({}, cell);
+                });
+            });
+            // Mutate
             newState.grid[action.end.row][action.end.col] = newState.grid[action.start.row][action.start.col];
             newState.grid[action.start.row][action.start.col] = null;
             return newState;

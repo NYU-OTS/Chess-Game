@@ -7,7 +7,18 @@ function chessApp(state: any, action: any) {
         case MOVE_PIECE:
             console.log("Moving Piece");
 
+            // Deep copy
             const newState = Object.assign({}, state);
+            newState.grid = state.grid.map((row:Array<any>) => {
+                return row.map((cell:any) => {
+                    if (cell)
+                        return Object.assign({}, cell);
+                    else 
+                        return null;
+                });
+            });
+            
+            // Mutate
             newState.grid[action.end.row][action.end.col] = newState.grid[action.start.row][action.start.col];
             newState.grid[action.start.row][action.start.col] = null;
 

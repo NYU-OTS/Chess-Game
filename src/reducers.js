@@ -1,24 +1,32 @@
-"use strict";
-exports.__esModule = true;
-var actions_js_1 = require("./actions.js");
+import { MOVE_PIECE, SELECT_PIECE, DESELECT_PIECE, NEXT_TURN } from './actions.js';
 //////////////////      Rules       //////////////////
 function chessApp(state, action) {
     switch (action.type) {
-        case actions_js_1.MOVE_PIECE:
+        case MOVE_PIECE:
             console.log("Moving Piece");
-            var newState = Object.assign({}, state);
+            // Deep copy
+            const newState = Object.assign({}, state);
+            newState.grid = state.grid.map((row) => {
+                return row.map((cell) => {
+                    if (cell)
+                        return Object.assign({}, cell);
+                    else
+                        return null;
+                });
+            });
+            // Mutate
             newState.grid[action.end.row][action.end.col] = newState.grid[action.start.row][action.start.col];
             newState.grid[action.start.row][action.start.col] = null;
             return newState;
-        case actions_js_1.SELECT_PIECE:
+        case SELECT_PIECE:
             return Object.assign({}, state, {
                 selected: { row: action.location.row, col: action.location.col }
             });
-        case actions_js_1.DESELECT_PIECE:
+        case DESELECT_PIECE:
             return Object.assign({}, state, {
                 selected: null
             });
-        case actions_js_1.NEXT_TURN:
+        case NEXT_TURN:
             return Object.assign({}, state, {
                 turn: state.turn === 'WHITE' ? 'BLACK' : 'WHITE'
             });
@@ -26,4 +34,4 @@ function chessApp(state, action) {
             return state;
     }
 }
-exports["default"] = chessApp;
+export default chessApp;

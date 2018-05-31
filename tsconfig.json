@@ -8,8 +8,6 @@
         "jsx": "react-native"
     },
     "include": [
-        "./src/**/*",
-        "./src/components/**/*",
-        "./src/containers/**/*"
+        "./src/**/*"
     ]
 }
