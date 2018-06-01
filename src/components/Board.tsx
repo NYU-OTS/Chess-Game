@@ -62,7 +62,7 @@ class Board extends React.Component<BoardProps, {}> {
                 const pKing = kings[this.props.playerTurn];
                 if (!isCheckedIf(this.props.grid, pKing, start, end)) {
                     
-                    this.props.grid[pKing.row][pKing.col].checked = null;
+                    this.props.unCheck(pKing);
                     this.props.movePiece(start, end);
 
                     // Must consider check/mate after each move
@@ -70,7 +70,7 @@ class Board extends React.Component<BoardProps, {}> {
                     if (isChecked(this.props.grid, this.props.grid[oKing.row][oKing.col], oKing)) {
                         // Check
                         console.log("Check");
-                        this.props.grid[oKing.row][oKing.col].checked = true;
+                        this.props.check(oKing);
                         if (isMate(this.props.grid, oKing)) {
                             // Game Over
                             console.log("Mate");
@@ -131,22 +131,8 @@ interface BoardProps {
     deselectPiece : () => any,
     movePiece : (start: any, end: any) => any,
     nextTurn : () => any,
+    unCheck : (location: any) => any,
+    check : (location: any) => any,
 }
 
-/*
-Board.propTypes = {
-    grid: PropTypes.arrayOf(
-        PropTypes.arrayOf(
-            PropTypes.object
-        ).isRequired
-    ).isRequired,
-    selectedSquare: PropTypes.object,
-    playerTurn: PropTypes.string,
-
-    selectPiece: PropTypes.func.isRequired,
-    deselectPiece: PropTypes.func.isRequired,
-    movePiece: PropTypes.func.isRequired,
-    nextTurn: PropTypes.func.isRequired,
-}
-*/
 export default Board;

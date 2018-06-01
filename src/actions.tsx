@@ -1,9 +1,3 @@
-/*  Action Types    */
-export const MOVE_PIECE = 'MOVE_PIECE';
-export const SELECT_PIECE = 'SELECT_PIECE';
-export const DESELECT_PIECE = 'DESELECT_PIECE';
-export const NEXT_TURN = 'NEXT_TURN';
-
 /*  Constants   */
 function isPawnMove(grid: Array<Array<any>>, start: any, end: any) {
     const piece = grid[start.row][start.col];
@@ -182,16 +176,6 @@ export function isMate(grid: Array<Array<any>>, loc: any) {
     return !(possibleMoves.length > 0);
 }
 
-/*
-export const PieceEnum: {
-    'P': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, black: string, white: string},
-    'R': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'H': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'B': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'Q': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    'K': {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, image: null},
-    [key: string]: any,
-} = */
 export const PieceEnum: {
     [key: string]: {name: string, moves: (grid: Array<Array<any>>, start: any, end: any) => boolean, BLACK: string, WHITE: string, [key: string]: any}
 } = Object.freeze({
@@ -204,18 +188,32 @@ export const PieceEnum: {
 })
 
 /*  Action Creators */
+export const MOVE_PIECE = 'MOVE_PIECE';
 export function movePiece(start: any, end: any) {
     return { type: MOVE_PIECE, start, end };
 }
 
+export const SELECT_PIECE = 'SELECT_PIECE';
 export function selectPiece(location: any) {
     return { type: SELECT_PIECE, location };
 }
 
+export const DESELECT_PIECE = 'DESELECT_PIECE';
 export function deselectPiece() {
     return { type: DESELECT_PIECE };
 }
 
+export const NEXT_TURN = 'NEXT_TURN';
 export function nextTurn() {
     return { type: NEXT_TURN };
+}
+
+export const UNCHECK = 'UNCHECK';
+export function unCheck(location: any) {
+    return { type: UNCHECK, location }
+}
+
+export const CHECK = 'CHECK';
+export function check(location: any) {
+    return { type: CHECK, location }
 }
