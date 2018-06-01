@@ -2,13 +2,17 @@
 
 Chess Game Web Application
 
-## Getting Started 
+## Installation
 
-Run 'npm install' to install all dependencies
+### `npm install`
+
+Installs the dependencies for the app.
 
 ## Deployment 
 
-Run 'npm start' to start server. Open http://localhost:3000/ to see the app
+### `npm start`
+
+Runs the app. Open http://localhost:3000/ to view it in the browser.
 
 ## Built With
 
